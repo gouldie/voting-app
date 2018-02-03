@@ -1,11 +1,11 @@
 {
-  "name": "MERN-boilerplate",
+  "name": "voting-app",
   "version": "1.0.0",
-  "description": "MERN stack project boilerplate",
-  "author": "Eugene Cheung",
+  "description": "Voting app",
+  "author": "Matthew Gould",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arkon/MERN-boilerplate.git"
+    "url": "git+https://github.com/gouldie/voting-app.git"
   },
   "license": "MIT",
   "private": true,
