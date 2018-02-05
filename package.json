@@ -24,6 +24,7 @@
     "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.28.5",
     "express": "^4.15.4",
+    "express-session": "^1.15.6",
     "extract-text-webpack-plugin": "^3.0.0",
     "html-webpack-plugin": "^2.30.1",
     "mongoose": "^4.11.7",

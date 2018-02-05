@@ -7,6 +7,7 @@ const path = require('path');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
+var session = require('express-session')
 
 const config = require('../config/config');
 const webpackConfig = require('../webpack.config');
@@ -25,11 +26,20 @@ mongoose.connect(isDev ? config.db_dev : config.db, {
 mongoose.Promise = global.Promise;
 
 const app = express();
+
+app.use(session({
+  secret: 'keyboard cat',
+  resave: false,
+  saveUninitialized: true
+}))
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // API routes
 require('./routes')(app);
+
+
 
 if (isDev) {
   const compiler = webpack(webpackConfig);
@@ -60,6 +70,8 @@ if (isDev) {
     res.end();
   });
 }
+
+
 
 app.listen(port, '0.0.0.0', (err) => {
   if (err) {
