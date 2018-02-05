@@ -1,18 +1,49 @@
 import React, { Component } from 'react';
 
-import Header from '../Header/Header';
-import Footer from '../Footer/Footer';
+import Header from '../core/Header';
+import Footer from '../core/Footer';
 
-const App = ({ children }) => (
-  <div>
-    <Header />
+class App extends Component {
+  constructor(props) {
+    super(props)
 
-    <main>
-      {children}
-    </main>
+    this.state = {
+      user: null
+    }
+  }
 
-    <Footer />
-  </div>
-);
+  componentWillMount() {
+    axios.get('/api/user', (user) => {
+      if (user) {
+        this.setState({ user: user || false })
+      }
+    })
+  }
+
+  render() {
+    const { children } = this.props
+    const { user } = this.state
+
+    if (user === null) {
+      return <div>LOADING..</div>
+    }
+
+    return (
+      <div>
+        <Header />
+
+        {user && user.username}
+    
+        <main>
+          {children}
+        </main>
+    
+        <Footer />
+      </div>
+    )
+  }
+
+}
+  
 
 export default App;

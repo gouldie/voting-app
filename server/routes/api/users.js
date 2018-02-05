@@ -9,6 +9,16 @@ module.exports = (app) => {
     return res.send("you are authorised!")
   })
 
+  app.get('/api/user', (req, res) => {
+    if (req.session.user) {
+      return res.json({
+        username
+      })
+    } else {
+      return null
+    }
+  })
+
   app.post('/api/register', (req, res, next) => {
     const username = req.body.username
     const password = req.body.password
