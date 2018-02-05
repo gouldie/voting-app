@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-
+import axios from 'axios'
 import Header from '../core/Header';
 import Footer from '../core/Footer';
 
@@ -13,11 +13,16 @@ class App extends Component {
   }
 
   componentWillMount() {
-    axios.get('/api/user', (user) => {
-      if (user) {
-        this.setState({ user: user || false })
-      }
-    })
+
+    axios.get('/api/user')
+      .then(user => {
+        if (user) {
+          this.setState({ user: user || false })
+        }
+      })
+      .catch(err => {
+        console.log('err', err)
+      })
   }
 
   render() {
@@ -38,7 +43,6 @@ class App extends Component {
           {children}
         </main>
     
-        <Footer />
       </div>
     )
   }

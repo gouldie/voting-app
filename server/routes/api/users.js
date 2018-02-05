@@ -10,12 +10,13 @@ module.exports = (app) => {
   })
 
   app.get('/api/user', (req, res) => {
+    return res.send('test')
     if (req.session.user) {
       return res.json({
         username
       })
     } else {
-      return null
+      return res.send(null)
     }
   })
 

@@ -10,7 +10,7 @@ import {
 
 import App from './components/app/App';
 import NotFound from './components/core/NotFound';
-import Home from './components/accounts/Accounts';
+import Home from './components/home/Home';
 import Polls from './components/polls/Polls';
 
 import './styles/styles.scss';

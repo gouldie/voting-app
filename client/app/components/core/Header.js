@@ -4,11 +4,16 @@ import { Link } from 'react-router-dom';
 
 const Header = () => (
   <header>
-    <Link to="/">Home</Link>
+    <Link to="/" className="home-link">fcc-voting</Link>
 
-    <nav>
-      <Link to="/helloworld">Hello World</Link>
-    </nav>
+      <button className="pure-button login">
+        Log In
+      </button>
+
+      <button className="pure-button">
+        Register
+      </button>
+   
 
     <hr />
   </header>
