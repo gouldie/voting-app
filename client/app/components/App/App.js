@@ -8,17 +8,14 @@ class App extends Component {
     super(props)
 
     this.state = {
-      user: null
+      username: null
     }
   }
 
   componentWillMount() {
-
-    axios.get('/api/user')
-      .then(user => {
-        if (user) {
-          this.setState({ user: user || false })
-        }
+    axios.get('/api/username')
+      .then(username => {
+        this.setState({ username: username.data })
       })
       .catch(err => {
         console.log('err', err)
@@ -27,17 +24,15 @@ class App extends Component {
 
   render() {
     const { children } = this.props
-    const { user } = this.state
+    const { username } = this.state
 
-    if (user === null) {
+    if (username === null) {
       return <div>LOADING..</div>
     }
 
     return (
       <div>
-        <Header />
-
-        {user && user.username}
+        <Header username={username} />
     
         <main>
           {children}

@@ -13,6 +13,7 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem } from 'reactstrap'
+import axios from 'axios'
 
  
 class Header extends Component {
@@ -28,6 +29,7 @@ class Header extends Component {
 
     this.toggleNav = this.toggleNav.bind(this)
     this.toggleModal = this.toggleModal.bind(this)
+    this.logout = this.logout.bind(this)
   }
 
   toggleNav() {
@@ -38,7 +40,15 @@ class Header extends Component {
     this.setState({ modal: this.state.modal ? null : modal })
   }
 
+  logout() {
+    axios.get('/api/logout')
+      .then(() => {
+        location.reload()
+      })
+  }
+
   render() {
+    const { username } = this.props
     const { modal } = this.state
 
     return (
@@ -49,12 +59,23 @@ class Header extends Component {
           <NavbarToggler onClick={this.toggleNav} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
+            { username &&
               <NavItem>
-                <NavLink style={{ cursor: 'pointer' }} onMouseDown={() => this.toggleModal('signin')}>Sign In</NavLink>
+                <NavLink style={{ cursor: 'pointer' }} onMouseDown={() => this.logout()}>Log Out</NavLink>
               </NavItem>
+            }
+            {
+              !username && 
               <NavItem>
-                <NavLink style={{ cursor: 'pointer' }} onMouseDown={() => this.toggleModal('register')}>Register</NavLink>
+                  <NavLink style={{ cursor: 'pointer' }} onMouseDown={() => this.toggleModal('signin')}>Sign In</NavLink>
               </NavItem>
+            }
+            {
+              !username &&
+              <NavItem>
+                  <NavLink style={{ cursor: 'pointer' }} onMouseDown={() => this.toggleModal('register')}>Register</NavLink>
+              </NavItem>
+            }
             </Nav>
           </Collapse>
 

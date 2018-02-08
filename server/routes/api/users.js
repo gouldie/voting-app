@@ -9,12 +9,9 @@ module.exports = (app) => {
     return res.send("you are authorised!")
   })
 
-  app.get('/api/user', (req, res) => {
-    return res.send('test')
+  app.get('/api/username', (req, res) => {
     if (req.session.user) {
-      return res.json({
-        username
-      })
+      return res.send(req.session.user.username)
     } else {
       return res.send(null)
     }
