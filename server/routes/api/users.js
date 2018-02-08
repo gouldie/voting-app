@@ -26,34 +26,34 @@ module.exports = (app) => {
 
     Users.findOne({ username }, (err, user) => {
       if (err) {
-        return res.status(500).send()
+        return res.send({ err: 'An error occurred. Please try again.'})
       }
 
       if (user) {
-        return res.send("user already exists")
+        return res.send({ err: 'Username taken'})
       }
 
       Users.create({ username, password }, () => {
-        return res.send('user created')
+        return res.send()
       })
     })
   });
 
-  app.post('/api/login', (req, res, next) => {
+  app.post('/api/signin', (req, res, next) => {
     const username = req.body.username
     const password = req.body.password
 
     Users.findOne({ username, password }, (err, user) => {
       if (err) {
-        return res.status(500).send()
+        return res.send({ err: 'An error occurred. Please try again.'})
       }
 
       if (!user) {
-        return res.status(404).send()
+        return res.send({ err: 'Incorrect username or password'})
       }
 
       req.session.user = user
-      return res.send("you are logged in")
+      return res.send()
     })
   });
 

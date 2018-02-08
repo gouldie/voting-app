@@ -14,6 +14,7 @@ import Home from './components/home/Home';
 import Polls from './components/polls/Polls';
 
 import './styles/styles.scss';
+import 'bootstrap/scss/bootstrap.scss';
 
 render((
   <Router>

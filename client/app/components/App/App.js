@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios'
-import Header from '../core/Header';
+import Header from '../core/Header/Header';
 import Footer from '../core/Footer';
 
 class App extends Component {
