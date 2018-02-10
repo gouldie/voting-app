@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import axios from 'axios'
 import Header from '../core/Header/Header';
 import Footer from '../core/Footer';
+import { auth } from '../../utils/utils'
 
 class App extends Component {
   constructor(props) {
@@ -13,12 +13,9 @@ class App extends Component {
   }
 
   componentWillMount() {
-    axios.get('/api/auth')
-      .then(username => {
-        this.setState({ username: username.data })
-      })
-      .catch(err => {
-        console.log('err', err)
+    auth()
+      .then((res) => {
+        this.setState({ username: res.username })
       })
   }
 
