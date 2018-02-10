@@ -13,7 +13,7 @@ class App extends Component {
   }
 
   componentWillMount() {
-    axios.get('/api/username')
+    axios.get('/api/auth')
       .then(username => {
         this.setState({ username: username.data })
       })

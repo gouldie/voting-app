@@ -7,7 +7,8 @@ const path = require('path');
 const webpack = require('webpack');
 const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
-var session = require('express-session')
+const session = require('express-session')
+const passport = require('passport');
 
 const config = require('../config/config');
 const webpackConfig = require('../webpack.config');
@@ -15,29 +16,32 @@ const webpackConfig = require('../webpack.config');
 const isDev = process.env.NODE_ENV !== 'production';
 const port  = process.env.PORT || 8080;
 
-
-// Configuration
-// ================================================================================================
-
 // Set up Mongoose
 mongoose.connect(isDev ? config.db_dev : config.db, {
   useMongoClient: true,
 });
 mongoose.Promise = global.Promise;
 
+// Set up Express
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
+// Configure passport
 app.use(session({
   secret: 'keyboard cat',
   resave: false,
   saveUninitialized: true
 }))
+app.use(passport.initialize());
+app.use(passport.session());
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// Initialize passport
+const initPassport = require('./passport/init')
+initPassport(passport)
 
 // API routes
-require('./routes')(app);
+require('./routes')(app, passport);
 
 
 

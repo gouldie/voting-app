@@ -1,58 +1,31 @@
 const Users = require('../../models/User');
 
-module.exports = (app) => {
-  app.get('/polls', (req, res) => {
-    if (!req.session.user) {
-      return res.status(401).send()
-    }
+const isAuthenticated = function (req, res, next) {
+	// if user is authenticated in the session, call the next() to call the next request handler 
+	// Passport adds this method to request object. A middleware is allowed to add properties to
+	// request and response objects
+	if (req.isAuthenticated())
+		return next();
+	// if the user is not authenticated then redirect him to the login page
+	res.redirect('/');
+}
 
-    return res.send("you are authorised!")
-  })
-
-  app.get('/api/username', (req, res) => {
-    if (req.session.user) {
-      return res.send(req.session.user.username)
+module.exports = (app, passport) => {
+  app.get('/api/auth', (req, res) => {
+    if (req.isAuthenticated()) {
+      return res.send(req.user.username)
     } else {
       return res.send(null)
     }
   })
 
-  app.post('/api/register', (req, res, next) => {
-    const username = req.body.username
-    const password = req.body.password
+  app.post('/api/register', passport.authenticate('register', {
+    successRedirect: '/'
+  }))
 
-    Users.findOne({ username }, (err, user) => {
-      if (err) {
-        return res.send({ err: 'An error occurred. Please try again.'})
-      }
-
-      if (user) {
-        return res.send({ err: 'Username taken'})
-      }
-
-      Users.create({ username, password }, () => {
-        return res.send()
-      })
-    })
-  });
-
-  app.post('/api/signin', (req, res, next) => {
-    const username = req.body.username
-    const password = req.body.password
-
-    Users.findOne({ username, password }, (err, user) => {
-      if (err) {
-        return res.send({ err: 'An error occurred. Please try again.'})
-      }
-
-      if (!user) {
-        return res.send({ err: 'Incorrect username or password'})
-      }
-
-      req.session.user = user
-      return res.send()
-    })
-  });
+  app.post('/api/login', passport.authenticate('login', {
+    successRedirect: '/'
+  }))
 
   app.get('/api/logout', (req, res) => {
     req.session.destroy(() => {

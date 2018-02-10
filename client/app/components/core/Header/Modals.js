@@ -29,7 +29,7 @@ export class SignInModal extends Component {
         const { username, password } = this.state
 
         e.preventDefault()
-        axios.post('/api/signin', { username, password})
+        axios.post('/api/login', { username, password})
             .then(res => {
                 if (res.data.err) {
                     this.setState({ error: res.data.err })
