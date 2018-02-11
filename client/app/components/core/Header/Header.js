@@ -54,7 +54,7 @@ class Header extends Component {
     return (
       <div>
         <Navbar color="faded" light expand="md">
-        <div className="container">
+
           <NavbarBrand href="/">fcc-voting</NavbarBrand>
           <NavbarToggler onClick={this.toggleNav} />
           <Collapse isOpen={this.state.isOpen} navbar>
@@ -87,7 +87,7 @@ class Header extends Component {
             : null
           }
           
-          </div>
+
         </Navbar>
       </div>
     )

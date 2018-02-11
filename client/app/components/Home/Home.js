@@ -1,23 +1,16 @@
 import React, { Component } from 'react';
-import 'whatwg-fetch';
 
 class Home extends Component {
   constructor(props) {
     super(props);
   }
 
-  register() {
-
-  }
-
-  login() {
-
-  }
-
   render() {
     return (
       <div>
-       
+        dashboard
+
+        what would you like to do today?
       </div>
     );
   }

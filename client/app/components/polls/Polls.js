@@ -1,7 +1,17 @@
-import React from 'react';
+import React, { Component } from 'react';
 
-const HelloWorld = () => (
-  <p>Hello World</p>
-);
+class Polls extends Component {
+  constructor(props) {
+    super(props);
+  }
 
-export default HelloWorld;
+  render() {
+    return (
+      <div>
+        polls list
+      </div>
+    );
+  }
+}
+
+export default Polls;

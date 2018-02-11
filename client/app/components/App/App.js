@@ -6,32 +6,18 @@ import { auth } from '../../utils/utils'
 class App extends Component {
   constructor(props) {
     super(props)
-
-    this.state = {
-      username: null
-    }
-  }
-
-  componentWillMount() {
-    auth()
-      .then((res) => {
-        this.setState({ username: res.username })
-      })
   }
 
   render() {
-    const { children } = this.props
-    const { username } = this.state
+    const { children, username } = this.props
 
-    if (username === null) {
-      return <div>LOADING..</div>
-    }
+    console.log('app', username)
 
     return (
-      <div>
+      <div className="container">
         <Header username={username} />
     
-        <main>
+        <main style={{ backgroundColor: '#eee' }}>
           {children}
         </main>
     
