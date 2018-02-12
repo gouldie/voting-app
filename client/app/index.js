@@ -8,9 +8,9 @@ import {
   Switch
 } from 'react-router-dom'
 
-import App from './components/app/App'
+import App from './components/App'
 import NotFound from './components/core/NotFound'
-import Home from './components/home/Home'
+import Home from './components/dashboard/Dashboard'
 import Polls from './components/polls/Polls'
 import CreatePoll from './components/polls/CreatePoll'
 

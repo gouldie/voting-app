@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import Header from '../core/Header/Header';
-import Footer from '../core/Footer';
-import { auth } from '../../utils/utils'
+import Header from './core/Header';
+import Footer from './core/Footer';
+import { auth } from '../utils/utils'
 
 class App extends Component {
   constructor(props) {
@@ -27,5 +27,4 @@ class App extends Component {
 
 }
   
-
 export default App;
