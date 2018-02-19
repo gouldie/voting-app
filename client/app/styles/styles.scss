@@ -1,3 +1,15 @@
 @charset "UTF-8";
 
 @import 'vendor/normalize';
+
+html {
+  height: 100vh;
+}
+
+body {
+  background-color: lightsteelblue !important;
+}
+
+body, #app {
+  height: 100%;
+}

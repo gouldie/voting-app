@@ -52,7 +52,7 @@ class Header extends Component {
     const { modal } = this.state
 
     return (
-      <div>
+      <div style={{ borderBottom: '1px solid #eee' }}>
         <Navbar color="faded" light expand="md">
 
           <NavbarBrand href="/">fcc-voting</NavbarBrand>

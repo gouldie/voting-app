@@ -17,7 +17,7 @@ class App extends Component {
       <div className="container">
         <Header username={username} />
     
-        <main style={{ backgroundColor: '#eee' }}>
+        <main>
           {children}
         </main>
     
