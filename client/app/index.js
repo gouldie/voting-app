@@ -13,6 +13,7 @@ import NotFound from './components/core/NotFound'
 import Home from './components/dashboard/Dashboard'
 import Polls from './components/polls/Polls'
 import CreatePoll from './components/polls/CreatePoll'
+import PrivateRoute from './components/core/PrivateRoute'
 
 import './styles/styles.scss'
 import 'bootstrap/scss/bootstrap.scss'
@@ -25,7 +26,7 @@ auth()
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/polls" component={Polls} />
-            <Route exact path="/poll/create" render={() => <CreatePoll username={res.username}/>} />
+            <PrivateRoute exact path="/poll/create" component={CreatePoll} />
             <Route component={NotFound}/>
           </Switch>
         </App>
