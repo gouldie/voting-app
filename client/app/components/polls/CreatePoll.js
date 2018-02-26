@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Form, FormGroup, FormText } from 'reactstrap';
 import { PollLabel, PollInput, PlusInput } from '../core/Inputs'
+import axios from 'axios'
 
 class CreatePoll extends Component {
   constructor(props) {
@@ -8,7 +9,9 @@ class CreatePoll extends Component {
 
     this.state = {
       title: null,
-      options: [null, null]
+      options: [null, null],
+      submitting: false,
+      submitComplete: false
     }
 
     this.addOption = this.addOption.bind(this)
@@ -45,11 +48,19 @@ class CreatePoll extends Component {
 
   submit(e) {
     e.preventDefault()
-    console.log()
+    this.setState({ submitting: true })
+    axios.post('/api/poll', {title: this.state.title, options: this.state.options})
+      .then(() => {
+        this.setState({ submitting: false })
+      })
   }
 
   render() {
     const { username } = this.props
+
+    if (this.state.submitComplete) {
+      //redirect with message
+    }
 
     return (
       <div style={{ padding: '20px' }}>
@@ -57,7 +68,7 @@ class CreatePoll extends Component {
         <Form onSubmit={(e) => this.submit(e)}>
           <FormGroup>
             <PollLabel text="Title" />
-            <PollInput />
+            <PollInput value={this.state.title} onChange={(e) => this.setState({ title: e.target.value })} />
           </FormGroup>
           <FormGroup>
             <PollLabel text="Options" />
@@ -66,7 +77,7 @@ class CreatePoll extends Component {
           <PlusInput onClick={this.addOption} />
 
           <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            <Button type="submit" color="success">Create</Button>
+            {this.state.submitting ? 'spinner' : <Button type="submit" color="success">Create</Button>}
           </div>
         </Form>
       </div>
