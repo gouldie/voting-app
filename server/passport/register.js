@@ -1,4 +1,4 @@
-var LocalStrategy   = require('passport-local').Strategy;
+var LocalStrategy = require('passport-local').Strategy;
 var User = require('../models/User');
 var bCrypt = require('bcrypt-nodejs');
 
@@ -20,7 +20,7 @@ module.exports = function(passport){
                     // already exists
                     if (user) {
                         console.log('User already exists with username: '+username);
-                        return done(null, false, req.flash('message','User Already Exists'));
+                        return done(null, false, {message: 'User Already Exists'});
                     } else {
                         // if there is no user with that email
                         // create the user

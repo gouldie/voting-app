@@ -31,7 +31,8 @@ export class SignInModal extends Component {
         e.preventDefault()
         axios.post('/api/login', { username, password})
             .then(res => {
-                if (res.data.err) {
+                console.log('test', res)
+                if (!res.data.success) {
                     this.setState({ error: res.data.err })
                 } else {
                     location.reload()

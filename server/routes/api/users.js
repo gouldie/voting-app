@@ -11,9 +11,16 @@ module.exports = (app, passport) => {
     successRedirect: '/'
   }))
 
-  app.post('/api/login', passport.authenticate('login', {
-    successRedirect: '/'
-  }))
+  app.post('/api/login', function(req, res, next) {
+    passport.authenticate('login', function(err, user, info) {
+      if (err) return res.status(500).json(info)
+      if (!user) return res.json(info)
+      req.login(user, (err) => {
+        console.log('err', err)
+        return res.json({ success: true })
+      })
+    })(req, res, next);
+  })
 
   app.get('/api/logout', (req, res) => {
     req.session.destroy(() => {

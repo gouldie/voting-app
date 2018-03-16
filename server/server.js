@@ -9,6 +9,8 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const session = require('express-session')
 const passport = require('passport');
+const flash = require('connect-flash');
+const MongoStore = require('connect-mongo')(session)
 
 const config = require('../config/config');
 const webpackConfig = require('../webpack.config');
@@ -26,13 +28,18 @@ mongoose.Promise = global.Promise;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(flash());
 
-// Configure passport
-app.use(session({
-  secret: 'keyboard cat',
-  resave: false,
-  saveUninitialized: true
-}))
+// Configure session & passport
+app.use(
+	session({
+		secret: process.env.APP_SECRET || 'this is the default passphrase',
+		store: new MongoStore({ mongooseConnection: mongoose.connection }),
+		resave: false,
+		saveUninitialized: false
+	})
+)
+
 app.use(passport.initialize());
 app.use(passport.session());
 
