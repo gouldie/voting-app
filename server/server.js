@@ -9,7 +9,6 @@ const webpackDevMiddleware = require('webpack-dev-middleware');
 const webpackHotMiddleware = require('webpack-hot-middleware');
 const session = require('express-session')
 const passport = require('passport');
-const flash = require('connect-flash');
 const MongoStore = require('connect-mongo')(session)
 
 const config = require('../config/config');
@@ -28,7 +27,6 @@ mongoose.Promise = global.Promise;
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-app.use(flash());
 
 // Configure session & passport
 app.use(

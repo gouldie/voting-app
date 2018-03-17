@@ -7,18 +7,17 @@ module.exports = (app, passport) => {
     }
   })
 
-  app.post('/api/register', passport.authenticate('register', {
-    successRedirect: '/'
-  }))
+  app.post('/api/register', function(req, res, next) {
+    passport.authenticate('register', function(err, user, info) {
+      if (err || !user) return res.json(info)
+      req.login(user, err => res.json({ success: true }))
+    })(req, res, next)
+  })
 
   app.post('/api/login', function(req, res, next) {
     passport.authenticate('login', function(err, user, info) {
-      if (err) return res.status(500).json(info)
-      if (!user) return res.json(info)
-      req.login(user, (err) => {
-        console.log('err', err)
-        return res.json({ success: true })
-      })
+      if (err || !user) return res.json(info)
+      req.login(user, err => res.json({ success: true }))
     })(req, res, next);
   })
 
