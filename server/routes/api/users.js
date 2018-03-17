@@ -1,5 +1,5 @@
 module.exports = (app, passport) => {
-  app.get('/api/auth', (req, res) => {
+  app.get('/api/user', (req, res) => {
     if (req.isAuthenticated()) {
       return res.send(req.user.username)
     } else {
