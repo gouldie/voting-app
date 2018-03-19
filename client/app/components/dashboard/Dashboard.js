@@ -1,13 +1,15 @@
 import React, {Component} from 'react'
 import {Button} from 'reactstrap'
-import {Redirect} from 'react-router-dom'
+import {connect} from 'react-redux'
+import Err from '../core/Error'
+import {push} from 'react-router-redux'
 
-class Home extends Component {
+class Dashboard extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      redirect: false
+      error: null
     }
 
     this.onButtonClick = this
@@ -16,14 +18,14 @@ class Home extends Component {
   }
 
   onButtonClick(type) {
-    this.setState({redirect: type})
+    if (type === '/poll/create' && !this.props.isAuthenticated) {
+      this.setState({ error: 'You must be logged in to do that' })
+      return
+    }
+    this.props.dispatch(push(type))
   }
 
   render() {
-    if (this.state.redirect) {
-      return <Redirect push to={this.state.redirect}/>
-    }
-
     return (
       <div
         style={{
@@ -41,12 +43,17 @@ class Home extends Component {
           flexWrap: 'wrap',
           width: '250px'
         }}>
-          <Button color="info" onMouseDown={() => this.onButtonClick('/poll/create')}>Create a Poll</Button>
-          <Button color="info" onMouseDown={() => this.onButtonClick('/polls')}>View Polls</Button>
+          <Button color="info" onClick={() => this.onButtonClick('/poll/create')}>Create a Poll</Button>
+          <Button color="info" onClick={() => this.onButtonClick('/polls')}>View Polls</Button>
         </div>
+        {this.state.error && <Err text={this.state.error}/>}
       </div>
     );
   }
 }
 
-export default Home;
+export default connect((state => ({
+  isAuthenticated: state.auth.isAuthenticated
+})), (dispatch) => ({
+  dispatch
+}))(Dashboard);

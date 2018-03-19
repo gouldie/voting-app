@@ -1,7 +1,7 @@
 import React from 'react'
 import {render} from 'react-dom'
 import {auth} from './utils/utils'
-import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom'
+import {Route, Link, Switch} from 'react-router-dom'
 import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux'
 import createHistory from 'history/createBrowserHistory'
@@ -24,7 +24,7 @@ const middleware = routerMiddleware(history)
 const store = createStore(
   combineReducers({
     ...reducers,
-    router: routerReducer
+    routing: routerReducer
   }),
   compose(applyMiddleware(middleware),window.devToolsExtension ? window.devToolsExtension() : f => f)
 )
