@@ -4,7 +4,7 @@ import { Label, Input } from 'reactstrap'
 export const PollLabel = ({ text }) => 
 <Label style={{ textAlign: 'center', width: '100%' }}>{text}</Label>
 
-export const PollInput = ({ value, onChange, onRemove }) =>
+export const PollInput = ({ value, onChange, onRemove }) => 
 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
     {onRemove && <span style={{ flex: 1 }}></span>}
     <Input value={value} onChange={onChange} type="text" style={{ maxWidth: '500px', margin: '10px' }} />

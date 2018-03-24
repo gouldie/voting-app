@@ -2,14 +2,17 @@ import React, { Component } from 'react';
 import { Button, Form, FormGroup, FormText } from 'reactstrap';
 import { PollLabel, PollInput, PlusInput } from '../core/Inputs'
 import axios from 'axios'
+import {connect} from 'react-redux'
+import {push} from 'react-router-redux'
+import { RingLoader } from 'react-spinners'
 
 class CreatePoll extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      title: null,
-      options: [null, null],
+      title: '',
+      options: ['', ''],
       submitting: false,
       submitComplete: false
     }
@@ -28,7 +31,7 @@ class CreatePoll extends Component {
 
   addOption() {
     const options = this.state.options
-    options.push(null)
+    options.push('')
 
     this.setState({ options })
   }
@@ -42,7 +45,7 @@ class CreatePoll extends Component {
 
   generateOptions() {
     return this.state.options.map((option, i) => {
-      return <PollInput type="text" value={this.state.options[i]} onChange={(e) => this.editOption(e, i)} onRemove={() => this.removeOption(i)} />
+      return <PollInput key={i}  type="text" value={this.state.options[i]} onChange={(e) => this.editOption(e, i)} onRemove={() => this.removeOption(i)} />
     })
   }
 
@@ -52,15 +55,12 @@ class CreatePoll extends Component {
     axios.post('/api/poll', {title: this.state.title, options: this.state.options})
       .then(() => {
         this.setState({ submitting: false })
+        this.props.dispatch(push('/'))
       })
   }
 
   render() {
     const { username } = this.props
-
-    if (this.state.submitComplete) {
-      //redirect with message
-    }
 
     return (
       <div style={{ padding: '20px' }}>
@@ -76,8 +76,11 @@ class CreatePoll extends Component {
           </FormGroup>
           <PlusInput onClick={this.addOption} />
 
-          <div style={{ textAlign: 'center', marginTop: '40px' }}>
-            {this.state.submitting ? 'spinner' : <Button type="submit" color="success">Create</Button>}
+          <div style={{ marginTop: '40px', display: 'flex', justifyContent: 'center' }}>
+            {this.state.submitting ? <RingLoader
+              color={'#123abc'} 
+              loading={true} 
+            /> : <Button type="submit" color="success">Create</Button>}
           </div>
         </Form>
       </div>
@@ -85,5 +88,7 @@ class CreatePoll extends Component {
   }
 }
 
-export default CreatePoll;
+export default connect(null, (dispatch) => ({
+  dispatch
+}))(CreatePoll)
 

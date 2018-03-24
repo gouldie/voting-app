@@ -25,6 +25,7 @@ class Dashboard extends Component {
     this.props.dispatch(push(type))
   }
 
+
   render() {
     return (
       <div
