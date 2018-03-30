@@ -5,6 +5,7 @@ import axios from 'axios'
 import {connect} from 'react-redux'
 import {push} from 'react-router-redux'
 import { RingLoader } from 'react-spinners'
+import Err from '../core/Error'
 
 class CreatePoll extends Component {
   constructor(props) {
@@ -14,7 +15,8 @@ class CreatePoll extends Component {
       title: '',
       options: ['', ''],
       submitting: false,
-      submitComplete: false
+      submitComplete: false,
+      error: null
     }
 
     this.addOption = this.addOption.bind(this)
@@ -51,7 +53,14 @@ class CreatePoll extends Component {
 
   submit(e) {
     e.preventDefault()
-    this.setState({ submitting: true })
+
+    // Basic client-side validation
+    if (!this.state.title || this.state.options.filter(option => option).length < 2) {
+      this.setState({ error: 'All fields must be filled in, with at least 2 options' })
+      return
+    }
+
+    this.setState({ submitting: true, error: null })
     axios.post('/api/poll', {title: this.state.title, options: this.state.options})
       .then(() => {
         this.setState({ submitting: false })
@@ -82,6 +91,7 @@ class CreatePoll extends Component {
               loading={true} 
             /> : <Button type="submit" color="success">Create</Button>}
           </div>
+          {this.state.error && <Err text={this.state.error}/>}
         </Form>
       </div>
     );

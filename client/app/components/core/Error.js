@@ -11,8 +11,10 @@ const containerStyle = {
 }
 
 const Err = ({ text }) => (
-  <div className="flex justify-center" style={containerStyle}>
-    <span>{text}</span>
+  <div style={{ display: 'flex', justifyContent: 'center' }}>
+    <div style={containerStyle}>
+      <span>{text}</span>
+    </div>
   </div>
 )
 

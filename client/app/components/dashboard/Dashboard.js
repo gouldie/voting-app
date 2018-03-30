@@ -57,4 +57,4 @@ export default connect((state => ({
   isAuthenticated: state.auth.isAuthenticated
 })), (dispatch) => ({
   dispatch
-}))(Dashboard);
+}))(Dashboard)
