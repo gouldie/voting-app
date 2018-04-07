@@ -16,4 +16,12 @@ module.exports = (app) => {
       })
     }
   })
+
+  app.get('/api/polls', (req, res) => {
+    Poll.find({}, (err, polls) => {
+      return res.send({
+        polls
+      })
+    })
+  })
 }
